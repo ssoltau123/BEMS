@@ -7,6 +7,8 @@ GasMoist <- read.csv("~/Desktop/GasMoist.csv")
  
  #Read in File
  
+ ######
+ 
  ULRate4Pre<-subset(ULRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
  ULRate4Post<-subset(ULRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
  
