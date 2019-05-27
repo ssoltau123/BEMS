@@ -163,23 +163,50 @@ wilcox.test(CFRate12Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., CFRate12Post$Gas.Flu
 
 install.packages("onewaytests")
 
-#Krustal Wallis and Dunn Test CO2 4 Cycle
+#Krustal Wallis and Dunn Test CO2, N2O, and CH4 (4 Cycle)
 install.packages("FSA")
 library(FSA)
 citation('FSA')
 citation('ggplot2')
 
 kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4) #p-value = 5.582e-05
-dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh") #1 and 2 SD were sig.
 
-kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
-dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate4) #p-value = 5.817e-05
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate4, method="bh") #Just 1 SD is sig
 
-kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
-dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate4) #p-value = 4.301e-05
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate4, method="bh") #Just 1 SD is sig
 
-kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
-dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate4) #p-value = 0.0002674
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate4, method="bh") #Just 1 SD is sig, less so than BF or DM
+
+kruskal.test(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4) #p-value = 4.05e-05
+dunnTest(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh") #1 and 2 SD were sig.
+
+kruskal.test(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate4) #p-value = 5.817e-05
+dunnTest(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate4, method="bh") #Just 1 SD is sig
+
+kruskal.test(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate4) #p-value = 4.301e-05
+dunnTest(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate4, method="bh") #Just 1 SD is sig
+
+kruskal.test(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate4) #p-value = 0.0002674
+dunnTest(Gas.Flux...µg.CH4.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate4, method="bh") #Just 1 SD is sig, less so than BF or DM
+
+#Krustal Wallis and Dunn Test CO2, N2O, and CH4 (12 cycle)
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate12) #p-value = 2.012e-06
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate12, method="bh") #no sig
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate12) #p-value = 9.83e-06
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = DMRate12, method="bh") #no sig
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate12) #p-value = 3.037e-06
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = BFRate12, method="bh") #Just 6 SD is sig (half way)
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate12) # p-value = 2.124e-06
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = CFRate12, method="bh") #Just 2 SD is sig
+
 
 
 
