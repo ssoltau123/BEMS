@@ -65,31 +65,126 @@ CFRate4Pre$Post<-CFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
 ULRate12Pre<-subset(ULRate12, Sample.Date=="2"|Sample.Date=="4"|Sample.Date=="6"|Sample.Date=="8"|Sample.Date=="10"|Sample.Date=="12"|Sample.Date=="14"|Sample.Date=="16"|Sample.Date=="18"|Sample.Date=="20"|Sample.Date=="22"|Sample.Date=="24")
 ULRate12Post<-subset(ULRate12, Sample.Date=="3"|Sample.Date=="5"|Sample.Date=="7"|Sample.Date=="9"|Sample.Date=="11"|Sample.Date=="13"|Sample.Date=="15"|Sample.Date=="17"|Sample.Date=="19"|Sample.Date=="21"|Sample.Date=="23"|Sample.Date=="25")
 
-ULRate4Pre$Post<-ULRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+ULRate12Pre$Post<-ULRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+
+DMRate12Pre<-subset(DMRate12, Sample.Date=="2"|Sample.Date=="4"|Sample.Date=="6"|Sample.Date=="8"|Sample.Date=="10"|Sample.Date=="12"|Sample.Date=="14"|Sample.Date=="16"|Sample.Date=="18"|Sample.Date=="20"|Sample.Date=="22"|Sample.Date=="24")
+DMRate12Post<-subset(DMRate12, Sample.Date=="3"|Sample.Date=="5"|Sample.Date=="7"|Sample.Date=="9"|Sample.Date=="11"|Sample.Date=="13"|Sample.Date=="15"|Sample.Date=="17"|Sample.Date=="19"|Sample.Date=="21"|Sample.Date=="23"|Sample.Date=="25")
+
+DMRate12Pre$Post<-DMRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+
+BFRate12Pre<-subset(BFRate12, Sample.Date=="2"|Sample.Date=="4"|Sample.Date=="6"|Sample.Date=="8"|Sample.Date=="10"|Sample.Date=="12"|Sample.Date=="14"|Sample.Date=="16"|Sample.Date=="18"|Sample.Date=="20"|Sample.Date=="22"|Sample.Date=="24")
+BFRate12Post<-subset(BFRate12, Sample.Date=="3"|Sample.Date=="5"|Sample.Date=="7"|Sample.Date=="9"|Sample.Date=="11"|Sample.Date=="13"|Sample.Date=="15"|Sample.Date=="17"|Sample.Date=="19"|Sample.Date=="21"|Sample.Date=="23"|Sample.Date=="25")
+
+BFRate12Pre$Post<-BFRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+
+CFRate12Pre<-subset(CFRate12, Sample.Date=="2"|Sample.Date=="4"|Sample.Date=="6"|Sample.Date=="8"|Sample.Date=="10"|Sample.Date=="12"|Sample.Date=="14"|Sample.Date=="16"|Sample.Date=="18"|Sample.Date=="20"|Sample.Date=="22"|Sample.Date=="24")
+CFRate12Post<-subset(CFRate12, Sample.Date=="3"|Sample.Date=="5"|Sample.Date=="7"|Sample.Date=="9"|Sample.Date=="11"|Sample.Date=="13"|Sample.Date=="15"|Sample.Date=="17"|Sample.Date=="19"|Sample.Date=="21"|Sample.Date=="23"|Sample.Date=="25")
+
+CFRate12Pre$Post<-CFRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+
+#Test for Normality (#** needs Log T) CO2
+
+shapiro.test(ULRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+ 
+shapiro.test(ULRate4Pre$Post) 
+
+shapiro.test(DMRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+  
+shapiro.test(DMRate4Pre$Post) 
+
+shapiro.test(BFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) 
+
+shapiro.test(BFRate4Pre$Post) 
+
+shapiro.test(CFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+
+shapiro.test(CFRate4Pre$Post) 
+
+shapiro.test(ULRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+
+shapiro.test(ULRate12Pre$Post) #**
+
+shapiro.test(DMRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+
+shapiro.test(DMRate12Pre$Post) #**
+
+shapiro.test(BFRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+
+shapiro.test(BFRate12Pre$Post) #**
+
+shapiro.test(CFRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.) #**
+
+shapiro.test(CFRate12Pre$Post) #**
+
+#Log Transform (Did for all 12 cycle)
+
+ULRate4Pre$logPre<-log10(ULRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.+10)
+shapiro.test(ULRate4Pre$logPre)
+
+DMRate4Pre$logPre<-log10(DMRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.+10)
+shapiro.test(DMRate4Pre$logPre)
+
+CFRate4Pre$logPre<-log10(CFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d.+10)
+shapiro.test(CFRate4Pre$logPre)
 
 
-DMRate4Pre<-subset(DMRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
-DMRate4Post<-subset(DMRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
+#Paired T Test for Cycle (Wilcoxxn non parametric approach) Pre and Post CO2, N2O, CH4
+wilcox.test(ULRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., ULRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(DMRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., DMRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.002441 
+wilcox.test(BFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., BFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(CFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., CFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.0004883
 
-DMRate4Pre$Post<-DMRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+wilcox.test(ULRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., ULRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.002628
+wilcox.test(DMRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., DMRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.03344
+wilcox.test(BFRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., BFRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) # p-value = 0.0308
+wilcox.test(CFRate12Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., CFRate12Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d., paired=TRUE) # p-value = 2.297e-06
 
-BFRate4Pre<-subset(BFRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
-BFRate4Post<-subset(BFRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
+wilcox.test(ULRate4Pre$Gas.Flux...µg.N2O.N.kg.OD.d., ULRate4Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(DMRate4Pre$Gas.Flux...µg.N2O.N.kg.OD.d., DMRate4Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(BFRate4Pre$Gas.Flux...µg.N2O.N.kg.OD.d., BFRate4Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(CFRate4Pre$Gas.Flux...µg.N2O.N.kg.OD.d., CFRate4Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 0.0004883
 
-BFRate4Pre$Post<-BFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+wilcox.test(ULRate12Pre$Gas.Flux...µg.N2O.N.kg.OD.d., ULRate12Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 2.91e-11
+wilcox.test(DMRate12Pre$Gas.Flux...µg.N2O.N.kg.OD.d., DMRate12Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) #p-value = 1.601e-09
+wilcox.test(BFRate12Pre$Gas.Flux...µg.N2O.N.kg.OD.d., BFRate12Post$Gas.Flux...µg.N2O.N.kg.OD.d., paired=TRUE) # p-value = 2.91e-11
+wilcox.test(CFRate12Pre$Gas.Flux...µg.N2O.N.kg.OD.d., CFRate12Post$Gas.Flux...µg.N2O.N.kg.OD.d.,  paired=TRUE) # p-value = 4.881e-07
 
-CFRate4Pre<-subset(CFRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
-CFRate4Post<-subset(CFRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
+wilcox.test(ULRate4Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., ULRate4Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) # p-value = 0.009277
+wilcox.test(DMRate4Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., DMRate4Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
+wilcox.test(BFRate4Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., BFRate4Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #p-value = 0.0004883
+wilcox.test(CFRate4Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., CFRate4Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
 
-CFRate4Pre$Post<-CFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
+wilcox.test(ULRate12Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., ULRate12Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
+wilcox.test(DMRate12Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., DMRate12Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
+wilcox.test(BFRate12Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., BFRate12Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
+wilcox.test(CFRate12Pre$Gas.Flux...µg.CH4.C.kg.OD.soil.d., CFRate12Post$Gas.Flux...µg.CH4.C.kg.OD.soil.d., paired=TRUE) #N.S
+
+#non parametric tests would be preferred (p value way too low-most likely not fixed by log T)
+
+install.packages("onewaytests")
+
+#Krustal Wallis and Dunn Test CO2 4 Cycle
+install.packages("FSA")
+library(FSA)
+citation('FSA')
+citation('ggplot2')
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4) #p-value = 5.582e-05
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
+
+kruskal.test(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4)
+dunnTest(Gas.Flux...mg.CO2.C.kg.OD.soil.d. ~ Sample.Date, data = ULRate4, method="bh")
 
 
-#Paired T Test for 4 Cycle Pre and Post
 
-t.test(DMRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., DMRate4Pre$Post, paired = T)
 
-t.test(BFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., BFRate4Pre$Post, paired = T)
 
-t.test(CFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., CFRate4Pre$Post, paired = T)
+
 
 
