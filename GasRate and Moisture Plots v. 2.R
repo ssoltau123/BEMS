@@ -1,96 +1,7 @@
-GasMoist <- read.csv("~/Desktop/GasMoist.csv")
+GasMoist <- read.csv("~/Desktop/BEMS R Studio/Data/GasMoist.csv")
  View(GasMoist)
- 
-# Heyyyyyyyy
- 
- #This is a comment
- 
+ install.packages("tidyverse")
  #Read in File
- 
- ######
- 
- ULRate4Pre<-subset(ULRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
- ULRate4Post<-subset(ULRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
- 
- ULRate4Pre$Post<-ULRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
- 
- t.test(ULRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., ULRate4Pre$Post, paired = T)
- 
- 
- DMRate4Pre<-subset(DMRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
- DMRate4Post<-subset(DMRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
- 
- DMRate4Pre$Post<-DMRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
- 
- t.test(DMRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., DMRate4Pre$Post, paired = T)
- 
- 
- BFRate4Pre<-subset(BFRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
- BFRate4Post<-subset(BFRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
- 
- BFRate4Pre$Post<-BFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
- 
- t.test(BFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., BFRate4Pre$Post, paired = T)
- 
- 
- CFRate4Pre<-subset(CFRate4, Sample.Date=="6"|Sample.Date=="12"|Sample.Date=="18"|Sample.Date=="24")
- CFRate4Post<-subset(CFRate4, Sample.Date=="7"|Sample.Date=="13"|Sample.Date=="19"|Sample.Date=="25")
- 
- CFRate4Pre$Post<-CFRate4Post$Gas.Flux...mg.CO2.C.kg.OD.soil.d
- 
- t.test(CFRate4Pre$Gas.Flux...mg.CO2.C.kg.OD.soil.d., CFRate4Pre$Post, paired = T)
- 
- library(tidyverse)
- ULRate4PreSum <- ULRate4Pre %>% # the names of the new data frame and the data frame to be summarised
-   group_by(Sample.Date) %>%   # the grouping variable
-   summarise(mean_CO2 = mean(Post))
- 
- DMRate4PreSum <- DMRate4Pre %>% # the names of the new data frame and the data frame to be summarised
-   group_by(Sample.Date) %>%   # the grouping variable
-   summarise(mean_CO2 = mean(Post)) 
- 
- BFRate4PreSum <- BFRate4Pre %>% # the names of the new data frame and the data frame to be summarised
-   group_by(Sample.Date) %>%   # the grouping variable
-   summarise(mean_CO2 = mean(Post))
- 
- CFRate4PreSum <- CFRate4Pre %>% # the names of the new data frame and the data frame to be summarised
-   group_by(Sample.Date) %>%   # the grouping variable
-   summarise(mean_CO2 = mean(Post))
- 
- library(tidyverse)
- ULRate12Sum1 <- ULRate12 %>% # the names of the new data frame and the data frame to be summarised
-   group_by(Sample.Date) %>%   # the grouping variable
-   summarise(mean_CO2 = mean(ULRate12$Gas.Flux...mg.CO2.C.kg.OD.soil.d.))
-
- res.aov <- aov(Gas.Flux...mg.CO2.C.kg.OD.soil.d.~ Treatment, data=DMRateCon)
- summary(res.aov)
- TukeyHSD(res.aov)
- 
- ULRate4$Gas.Flux...mg.CO2.C.kg.OD.soil.d.
- 
- 
-install.packages("pgirmess")
- 
-kruskal.test(ULRate12$Gas.Flux...mg.CO2.C.kg.OD.soil.d~ Sample.Date, data = ULRate12)
-
-require(pgirmess)
-kruskalmc(ULRate4$Cum.Gas.Flux...mg.CO2.C.kg.OD.soil., ULRate4$Sample.Date)
-
-
-TukeyHSD(res.aov)
-
- library("car")
- qqplot()
- 
- wilcox.test(y~A) (Gas.Flux...mg.CO2.C.kg.OD.soil.d.~ Sample.Date,
-          data=BFRate4, method = "bh")
-
-shapiro.test(ULRate4Pre$Post)
- 
- ULRate4$logCO2<-log10(10*ULRate4$Gas.Flux...mg.CO2.C.kg.OD.soil.d.+10)  
- BFCum$logCO2<-log10(10*BFCum$CO2)  **
-   CFCum$logCO2<-log10(10*CFCum$CO2)  
- 
  
  #Subset by Soil
  
@@ -112,7 +23,7 @@ shapiro.test(ULRate4Pre$Post)
  DMRateAD<-subset(DMRate, Treatment=="AD")
  DMRateFC<-subset (DMRate, Treatment=="FC")
  DMRateSAT<-subset(DMRate, Treatment=="SAT")
- DMRateCon <-subset(DMRate, Treatment=="FC"|Treatment=="SAT")
+ 
  
  BFRate4<-subset(BFRate, Treatment=="4")
  BFRate12<-subset(BFRate, Treatment=="12")
@@ -126,20 +37,7 @@ shapiro.test(ULRate4Pre$Post)
  CFRateAD<-subset(CFRate, Treatment=="AD")
  CFRateFC<-subset(CFRate, Treatment=="FC")
  CFRateSAT<-subset(CFRate, Treatment=="SAT")
- 
 
- 
- 
- DMRate4<-subset(DMRate, Treatment=="4")
- DMRate12<-subset(DMRate, Treatment=="12")
- 
- 
- BFRate4<-subset(BFRate, Treatment=="4")
- BFRate12<-subset(BFRate, Treatment=="12")
-
- CFRate4<-subset(CFRate, Treatment=="4")
- CFRate12<-subset(CFRate, Treatment=="12")
- 
  #Summarize 4 and 12 data with Standard errors
  
  #Summarize Gas Rates
@@ -149,7 +47,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -171,7 +69,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -193,7 +91,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -214,7 +112,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -235,7 +133,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -256,7 +154,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -278,7 +176,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -300,7 +198,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -321,7 +219,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -342,7 +240,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -363,7 +261,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -385,7 +283,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -407,7 +305,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -428,7 +326,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -449,7 +347,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -470,7 +368,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -492,7 +390,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -514,7 +412,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -535,7 +433,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -556,7 +454,7 @@ shapiro.test(ULRate4Pre$Post)
    summarise(mean_CO2 = mean(Gas.Flux...mg.CO2.C.kg.OD.soil.d.),
              mean_CH4 = mean(Gas.Flux...µg.CH4.C.kg.OD.soil.d.),
              mean_N2O = mean(Gas.Flux...µg.N2O.N.kg.OD.d.),
-             Days=mean(Cum.Days),
+             Days=mean(Cum.Days-7),
              APer.Sat = mean(Per.Sat), 
              sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
@@ -575,37 +473,35 @@ shapiro.test(ULRate4Pre$Post)
  library(tidyverse)
  CFRateSumMoist <- CFRate %>% # the names of the new data frame and the data frame to be summarised
    group_by(Sample.Date) %>%   # the grouping variable
-   summarise(Per.Sat = mean(Percent.Sat),
-             CumDays=mean(Cum.Days),
-             Weeks=mean(Weeks),
-             sd_M = sd(Percent.Sat), # calculates the standard deviation of each group
+   summarise(Per.Sat = mean(Per.Sat),
+             sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
-             SE_M = sd(Percent.Sat)/sqrt(n())) 
+             SE_M = sd(Per.Sat)/sqrt(n())) 
  
  
  library(tidyverse)
  BFRateSumMoist <- BFRate %>% # the names of the new data frame and the data frame to be summarised
    group_by(Sample.Date) %>%   # the grouping variable
-   summarise(Per.Sat = mean(Percent.Sat),
-             sd_M = sd(Percent.Sat), # calculates the standard deviation of each group
+   summarise(Per.Sat = mean(Per.Sat),
+             sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
-             SE_M = sd(Percent.Sat)/sqrt(n())) 
+             SE_M = sd(Per.Sat)/sqrt(n())) 
  
  library(tidyverse)
  ULRateSumMoist <- ULRate %>% # the names of the new data frame and the data frame to be summarised
    group_by(Sample.Date) %>%   # the grouping variable
-   summarise(Per.Sat = mean(Percent.Sat),
-             sd_M = sd(Percent.Sat), # calculates the standard deviation of each group
+   summarise(Per.Sat = mean(Per.Sat),
+             sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
-             SE_M = sd(Percent.Sat)/sqrt(n())) 
+             SE_M = sd(Per.Sat)/sqrt(n())) 
  
  library(tidyverse)
  DMRateSumMoist <- DMRate %>% # the names of the new data frame and the data frame to be summarised
    group_by(Sample.Date) %>%   # the grouping variable
-   summarise(Per.Sat = mean(Percent.Sat),
-             sd_M = sd(Percent.Sat), # calculates the standard deviation of each group
+   summarise(Per.Sat = mean(Per.Sat),
+             sd_M = sd(Per.Sat), # calculates the standard deviation of each group
              n_M = n(),  # calculates the sample size per group
-             SE_M = sd(Percent.Sat)/sqrt(n())) 
+             SE_M = sd(Per.Sat)/sqrt(n())) 
  
  
  #Simple Plots (more advanced plots for paper later)
@@ -641,24 +537,25 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="red")+
    labs(y="Percent Saturation", x = "# Incubation Weeks") +
      theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  +
-   scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(NA,105), expand = c(0,0)) +
+   scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(0,100), expand = c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 5, 0))
  
   ULM4 
   
- 
  ULC4 <-ggplot(data=ULRate4Sum, aes(x=Days, y=mean_CO2)) +
    geom_line(color="red")+
    geom_point(color="red", size=1.3) + 
    geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="red")+
    labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,NA), expand = c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks=seq(0,120, by=30), limits=c(0,120), expand = c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
+         plot.margin = margin(10, 0, 0, 0))
  
  ULC4
  
@@ -668,10 +565,11 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="purple")+
    labs(y="Percent Saturation", x = "# Incubation Days") +
    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(limits = c(0, 105), expand = c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(limits = c(0, 100), expand = c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 5, 0))
  
   ULM12
  
@@ -681,10 +579,11 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="purple")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,NA), expand = c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks=seq(0,120, by=30), limits=c(0,120), expand = c(0,1)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  ULC12
  
@@ -698,10 +597,11 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="dark gray")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days")+
  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand_limits(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-1,101), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 5, 0))
  
 
   ULMCon
@@ -717,10 +617,11 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(data=ULRateFCSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="green")+
    geom_errorbar(data=ULRateSATSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="blue")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,100,by=25)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,120,by=30), limits=c(NA,120), expand=c(0,1)) +
    theme(axis.title.y = element_blank(), 
   axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-   axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+   axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+  plot.margin = margin(10, 0, 0, 0))
  
  
  ULCCon 
@@ -732,24 +633,26 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="red")+
    labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-10,3500), expand=c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks=seq(0,5000, by=1000), limits=c(NA, 5000), expand=c(0,1)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  ULN4
  
  ULCH4 <-ggplot(data=ULRate4Sum, aes(x=Days, y=mean_CH4)) +
    geom_line(color="red")+
-   geom_hline(yintercept=0) +
+   geom_hline(yintercept=0, linetype="dashed") +
    geom_point(color="red", size=1.3) + 
    geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="red")+
    labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-60,30), expand=c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-75,75), breaks=seq(-75,75, by=50), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  ULCH4
  
@@ -759,24 +662,26 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="purple")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(limits=c(NA,500), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  ULN12
  
  ULCH12 <-ggplot(data=ULRate12Sum, aes(x=Days, y=mean_CH4)) +
    geom_line(color="purple")+
-   geom_hline(yintercept=0) +
+   geom_hline(yintercept=0, linetype="dashed") +
    geom_point(color="purple", size=1.3) + 
    geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="purple")+
    labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-55,130), expand=c(0,0)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks=seq(-150,150, by=100), limits=c(-150, 150), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  
  ULCH12
@@ -792,16 +697,18 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(data=ULRateFCSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="green")+
    geom_errorbar(data=ULRateSATSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="blue")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,2000,by=400)) +
+   scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks=seq(0,2500,by=500), limits=c(-25,2500), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  
  ULNCon 
  
  ULCHCon <-ggplot(data=ULRateADSum, aes(x=Days, y=mean_CH4)) +
    geom_line(color="orange")+
+   geom_hline(yintercept=0, linetype="dashed")+
    geom_line(data=ULRateFCSum, aes(x=Days, y=mean_CH4), color="green")+
    geom_line(data=ULRateSATSum, aes(x=Days, y=mean_CH4), color="blue")+
    geom_point(data=ULRateSATSum, color="blue", size=1.3) + 
@@ -811,10 +718,11 @@ shapiro.test(ULRate4Pre$Post)
    geom_errorbar(data=ULRateFCSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="green")+
    geom_errorbar(data=ULRateSATSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="blue")+
    labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-   scale_x_continuous(breaks= seq(0,90,by=10))  +
+   scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(limits=c(-7.5,7.5), breaks=seq(-7.5,7.5, by=5), expand=c(0,0)) +
    theme(axis.title.y = element_blank(), 
          axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+         axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+         plot.margin = margin(10, 0, 0, 0))
  
  
  ULCHCon 
@@ -824,6 +732,7 @@ shapiro.test(ULRate4Pre$Post)
 ULM
 ULC
 
+install.packages("gridExtra")
 require(gridExtra)
 ULGas4<-grid.arrange(ULC4, ULN4, ULCH4, ULM4, nrow=4)
 ULGas12<-grid.arrange(ULC12, ULN12, ULCH12, ULM12, nrow=4)
@@ -839,10 +748,11 @@ DMM4 <-ggplot(data=DMRate4Sum, aes(x=Days, y=APer.Sat)) + theme_bw() +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="red")+
   labs(y="Percent Saturation", x = "# Incubation Weeks") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  +
-  scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(NA,105), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,100), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 DMM4 
 
@@ -853,10 +763,11 @@ DMC4 <-ggplot(data=DMRate4Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,NA), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-1,40), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 DMC4
 
@@ -869,7 +780,10 @@ DMM12 <-ggplot(data=DMRate12Sum, aes(x=Days, y=APer.Sat)) +
   scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(limits = c(0, NA), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
+
+       
 
 DMM12
 
@@ -879,10 +793,11 @@ DMC12 <-ggplot(data=DMRate12Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-2, 40), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 DMC12
 
@@ -896,10 +811,11 @@ DMMCon <-ggplot(data=DMRateADSum, aes(x=Days, y=APer.Sat)) +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="dark gray")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days")+
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand_limits(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand=c(0,1)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 
 DMMCon
@@ -915,10 +831,11 @@ DMCCon <-ggplot(data=DMRateADSum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(data=DMRateFCSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="green")+
   geom_errorbar(data=DMRateSATSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,30, by=5)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,40, by=10), limits=c(-2,40), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 DMCCon 
@@ -930,24 +847,26 @@ DMN4 <-ggplot(data=DMRate4Sum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-10,2600), expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-5,3000), breaks=seq(0,3000, by=600), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(15, 0, 0, 0))
 
 DMN4
 
 DMCH4 <-ggplot(data=DMRate4Sum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="red")+
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept=0, linetype="dashed") +
   geom_point(color="red", size=1.3) + 
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-40,30), expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-40,40), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 DMCH4
 
@@ -957,24 +876,26 @@ DMN12 <-ggplot(data=DMRate12Sum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(limits=c(-5,1000), breaks=seq(0,1000, by=200), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 DMN12
 
 DMCH12 <-ggplot(data=DMRate12Sum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="purple")+
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept=0, linetype="dashed") +
   geom_point(color="purple", size=1.3) + 
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="purple")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-55,60), expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-60,60), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 DMCH12
@@ -990,16 +911,18 @@ DMNCon <-ggplot(data=DMRateADSum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(data=DMRateFCSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="green")+
   geom_errorbar(data=DMRateSATSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,2000,by=40)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,300,by=60), limits=c(NA,300), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 DMNCon 
 
 DMCHCon <-ggplot(data=DMRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="orange")+
+  geom_hline(yintercept=0, linetype="dashed")+
   geom_line(data=DMRateFCSum, aes(x=Days, y=mean_CH4), color="green")+
   geom_line(data=DMRateSATSum, aes(x=Days, y=mean_CH4), color="blue")+
   geom_point(data=DMRateSATSum, color="blue", size=1.3) + 
@@ -1009,10 +932,11 @@ DMCHCon <-ggplot(data=DMRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_errorbar(data=DMRateFCSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="green")+
   geom_errorbar(data=DMRateSATSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  +
+  scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(limits=c(-3,3), breaks=seq(-3,3, by=1.5), expand=c(0,0))+
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 DMCHCon 
@@ -1037,10 +961,11 @@ BFM4 <-ggplot(data=BFRate4Sum, aes(x=Days, y=APer.Sat)) + theme_bw() +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="red")+
   labs(y="Percent Saturation", x = "# Incubation Weeks") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  +
-  scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(NA,105), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-7,100), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 BFM4 
 
@@ -1051,10 +976,11 @@ BFC4 <-ggplot(data=BFRate4Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,130), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(-5,130), breaks=seq(0,130, by=26), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 BFC4
 
@@ -1064,10 +990,11 @@ BFM12 <-ggplot(data=BFRate12Sum, aes(x=Days, y=APer.Sat)) +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="purple")+
   labs(y="Percent Saturation", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(seq(0, 100, by=25)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(seq(0, 100, by=25), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 BFM12
 
@@ -1077,10 +1004,11 @@ BFC12 <-ggplot(data=BFRate12Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits = c(0,125)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits = c(0,130), breaks=seq(0,130, by=26), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 BFC12
 
@@ -1094,10 +1022,11 @@ BFC12
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="dark gray")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days")+
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand_limits(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand=c(0,1)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 
 BFMCon
@@ -1113,10 +1042,11 @@ BFCCon <-ggplot(data=BFRateADSum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(data=BFRateFCSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="green")+
   geom_errorbar(data=BFRateSATSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,200, by=20)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,130, by=26), expand=c(0,0), limits=c(NA,130)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 BFCCon 
@@ -1128,24 +1058,26 @@ BFN4 <-ggplot(data=BFRate4Sum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(NA,10000)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 BFN4
 
 BFCH4 <-ggplot(data=BFRate4Sum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="red")+
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept=0,linetype="dashed") +
   geom_point(color="red", size=1.3) + 
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(-50,50), breaks=seq(-50,50, by=25)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 BFCH4
 
@@ -1155,10 +1087,11 @@ BFN12 <-ggplot(data=BFRate12Sum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0), limits=c(0, 10000), breaks=seq(0,10000, by=2500)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 BFN12
 
@@ -1169,10 +1102,11 @@ BFCH12 <-ggplot(data=BFRate12Sum, aes(x=Days, y=mean_CH4)) +
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="purple")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(-50,50), breaks=seq(-50,50, by=25)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 BFCH12
@@ -1188,16 +1122,18 @@ BFNCon <-ggplot(data=BFRateADSum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(data=BFRateFCSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="green")+
   geom_errorbar(data=BFRateSATSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  +
+  scale_x_continuous(breaks= seq(0,90,by=10))  +  scale_y_continuous(expand=c(0,0), limits=c(-2,1000), breaks=seq(0,1000, by=250)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
-
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
+       
 
 BFNCon 
 
 BFCHCon <-ggplot(data=BFRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="orange")+
+  geom_hline(yintercept=0,linetype="dashed")+
   geom_line(data=BFRateFCSum, aes(x=Days, y=mean_CH4), color="green")+
   geom_line(data=BFRateSATSum, aes(x=Days, y=mean_CH4), color="blue")+
   geom_point(data=BFRateSATSum, color="blue", size=1.3) + 
@@ -1207,10 +1143,11 @@ BFCHCon <-ggplot(data=BFRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_errorbar(data=BFRateFCSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="green")+
   geom_errorbar(data=BFRateSATSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0), limits=c(-50,50), breaks=seq(-50,50, by=25)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 BFCHCon 
@@ -1235,10 +1172,11 @@ CFM4 <-ggplot(data=CFRate4Sum, aes(x=Days, y=APer.Sat)) + theme_bw() +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="red")+
   labs(y="Percent Saturation", x = "# Incubation Weeks") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  +
-  scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(NA,105), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,91,by=10)) +  scale_y_continuous(limits=c(NA,100), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 CFM4 
 
@@ -1249,10 +1187,11 @@ CFC4 <-ggplot(data=CFRate4Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,45), expand = c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(NA,40), expand = c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 CFC4
 
@@ -1262,10 +1201,11 @@ CFM12 <-ggplot(data=CFRate12Sum, aes(x=Days, y=APer.Sat)) +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="purple")+
   labs(y="Percent Saturation", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(seq(0, 100, by=25)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) + scale_y_continuous(seq(0, 100, by=25), expand=c(0,0),limits=c(0,100)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 CFM12
 
@@ -1275,10 +1215,11 @@ CFC12 <-ggplot(data=CFRate12Sum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(aes(ymin = mean_CO2 - sd_C, ymax = mean_CO2 + sd_C), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(NA,40), breaks=seq(0,40, by=10)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 CFC12
 
@@ -1292,10 +1233,11 @@ CFMCon <-ggplot(data=CFRateADSum, aes(x=Days, y=APer.Sat)) +
   geom_errorbar(aes(ymin = APer.Sat - sd_M, ymax = APer.Sat + sd_M), width=0.4,  color="dark gray")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days")+
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand_limits(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(limits=c(0,100), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 5, 0))
 
 
 CFMCon
@@ -1311,10 +1253,11 @@ CFCCon <-ggplot(data=CFRateADSum, aes(x=Days, y=mean_CO2)) +
   geom_errorbar(data=CFRateFCSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="green")+
   geom_errorbar(data=CFRateSATSum, aes(ymin = mean_CO2 - SE_C, ymax = mean_CO2 + SE_C), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,200, by=20)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(breaks= seq(0,40, by=10), limits=c(NA,40), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 CFCCon 
@@ -1326,51 +1269,56 @@ CFN4 <-ggplot(data=CFRate4Sum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(NA,20)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 CFN4
 
 CFCH4 <-ggplot(data=CFRate4Sum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="red")+
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept=0, linetype="dashed") +
   geom_point(color="red", size=1.3) + 
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="red")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), breaks=seq(-40,40, by=20), limits=c(-40,40)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 CFCH4
 
 CFN12 <-ggplot(data=CFRate12Sum, aes(x=Days, y=mean_N2O)) +
   geom_line(color="purple")+
+  geom_hline(yintercept=0, linetype="dashed") +
   geom_point(color="purple", size=1.3) + 
   geom_errorbar(aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="purple")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(expand=c(0,0), limits=c(-10,10), breaks=seq(-10,10, by=5)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 CFN12
 
 CFCH12 <-ggplot(data=CFRate12Sum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="purple")+
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept=0,linetype="dashed") +
   geom_point(color="purple", size=1.3) + 
   geom_errorbar(aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="purple")+
   labs(y="CO2 Flux (milligrams C/kg OD Soil)", x = "# Incubation Days") +
   theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0)) +
+  scale_x_continuous(breaks= seq(0,90,by=10)) +  scale_y_continuous(expand=c(0,0), limits=c(-40,40), breaks=seq(-40, 40, by=20)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 CFCH12
@@ -1386,16 +1334,18 @@ CFNCon <-ggplot(data=CFRateADSum, aes(x=Days, y=mean_N2O)) +
   geom_errorbar(data=CFRateFCSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="green")+
   geom_errorbar(data=CFRateSATSum, aes(ymin = mean_N2O - SE_N, ymax = mean_N2O + SE_N), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(limits=c(NA,5), expand=c(0,0)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 CFNCon 
 
 CFCHCon <-ggplot(data=CFRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_line(color="orange")+
+  geom_hline(yintercept=0,linetype="dashed") +
   geom_line(data=CFRateFCSum, aes(x=Days, y=mean_CH4), color="green")+
   geom_line(data=CFRateSATSum, aes(x=Days, y=mean_CH4), color="blue")+
   geom_point(data=CFRateSATSum, color="blue", size=1.3) + 
@@ -1405,10 +1355,11 @@ CFCHCon <-ggplot(data=CFRateADSum, aes(x=Days, y=mean_CH4)) +
   geom_errorbar(data=CFRateFCSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="green")+
   geom_errorbar(data=CFRateSATSum, aes(ymin = mean_CH4 - SE_CH, ymax = mean_CH4 + SE_CH), width=0.4,  color="blue")+
   labs(y="Soil Moisture (% of Saturation)", x = "# Incubation Days") + theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))  + 
-  scale_x_continuous(breaks= seq(0,90,by=10))  +
+  scale_x_continuous(breaks= seq(0,90,by=10))  + scale_y_continuous(breaks=seq(-4,4,by=2), expand=c(0,0), limits=c(-4,4)) +
   theme(axis.title.y = element_blank(), 
         axis.text.y = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"), 
-        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"))
+        axis.title.x = element_blank(), axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=1,vjust=0,face="plain"),
+        plot.margin = margin(10, 0, 0, 0))
 
 
 CFCHCon 
