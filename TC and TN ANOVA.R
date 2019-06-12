@@ -1,7 +1,12 @@
-BemsIsotopes <- read.csv("~/Desktop/ISO.csv")
+BemsIsotopes <- read.csv("~/Desktop/BEMS R Studio/Data/ISO.csv")
 View(BemsIsotopes)
 
 # Reading in CSV file
+
+#Converting TC and TN to SI units --> g/kg
+
+BemsIsotopes$TC<-BemsIsotopes$X.C*10
+BemsIsotopes$TN<-BemsIsotopes$X.N*10
 
 #Subsetting by Soil
 
@@ -10,113 +15,236 @@ CFIso <- subset(BemsIsotopes, Sample.ID == "CF")
 ULIso <- subset(BemsIsotopes, Sample.ID == "UL")
 DMIso <- subset(BemsIsotopes, Sample.ID == "DM")
 
+#1 WAY ANOVA (setting up model for samples)
+ULIso$Treatment = factor(ULIso$Treatment, 
+                         levels=unique(ULIso$Treatment))
 
-#Testing Normality
-shapiro.test(ULIso$X.C) #Pass
-shapiro.test(DMIso$X.C) #Pass
-shapiro.test(BFIso$X.C) #Pass
-shapiro.test(CFIso$X.C) #Pass
+levels(ULIso$Treatment)
 
-shapiro.test(ULIso$X.N) #Pass
-shapiro.test(DMIso$X.N) #Pass
-shapiro.test(BFIso$X.N) #Pass
-shapiro.test(CFIso$X.N) #No Pass
+DMIso$Treatment = factor(DMIso$Treatment, 
+                         levels=unique(DMIso$Treatment))
 
-CFIso$logN<-log(CFIso$X.N)
-shapiro.test(CFIso$logN) #Still No Pass
+levels(DMIso$Treatment)
 
-shapiro.test(ULIso$X13C) #No Pass
-shapiro.test(DMIso$X13C) #No Pass
-shapiro.test(BFIso$X13C) #No Pass
-shapiro.test(CFIso$X13C) #No Pass
+BFIso$Treatment = factor(BFIso$Treatment, 
+                         levels=unique(BFIso$Treatment))
 
-shapiro.test(ULIso$X13N) #Pass
-shapiro.test(DMIso$X13N) #Pass
-shapiro.test(BFIso$X13N) #Pass
-shapiro.test(CFIso$X13N) #Pass
+levels(BFIso$Treatment)
 
-#Running 1-way ANOVA on %C by all Treatments
+CFIso$Treatment = factor(CFIso$Treatment, 
+                         levels=unique(CFIso$Treatment))
 
-res.aov <- aov(X.C ~ Treatment, data = ULIso) #p=9.58e-05
-summary(res.aov)
+levels(CFIso$Treatment)
 
-TukeyHSD(res.aov)
+library(psych)
 
-res.aov <- aov(X.C ~ Treatment, data = DMIso) #p=0.72 no sig
-summary(res.aov)
+#_________________Model for TC
 
-TukeyHSD(res.aov)
+describeBy(ULIso$TC, ULIso$Treatment)
 
-res.aov <- aov(X.C ~ Treatment, data = BFIso) #p=0.00794
-summary(res.aov)
+model <- aov(TC ~ Treatment, data = ULIso)
 
-TukeyHSD(res.aov)
+shapiro.test(residuals(model)) # normality PASS
 
-res.aov <- aov(X.C ~ Treatment, data = CFIso) #p-0.00687
-summary(res.aov)
+leveneTest(TC ~ Treatment, data = ULIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
 
-TukeyHSD(res.aov)
+summary(model)
+TukeyHSD(model, method="sidak")
 
-#What is the best way to assign the subscripts indicating significance to my table using the results from Tukey.  Steve mentioned some tips, but I cannot recall 100%
+describeBy(DMIso$TC, DMIso$Treatment)
 
-#Running 1-way ANOVA/Krustal Wallis on %N by all Treatments
+model <- aov(TC ~ Treatment, data = DMIso)
 
-res.aov <- aov(X.N ~ Treatment, data = ULIso) #p=0.0115
-summary(res.aov)
+shapiro.test(residuals(model)) # normality PASS
 
-TukeyHSD(res.aov)
+leveneTest(TC ~ Treatment, data = DMIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
 
-res.aov <- aov(X.N ~ Treatment, data = DMIso) #p=0.838 no sig
-summary(res.aov)
+summary(model) #No Sig
+TukeyHSD(model, method="sidak")
 
-TukeyHSD(res.aov)
 
-res.aov <- aov(X.N ~ Treatment, data = BFIso) #p=0.256 no sig
-summary(res.aov)
+describeBy(BFIso$TC, BFIso$Treatment)
 
-TukeyHSD(res.aov)
+model <- aov(TC ~ Treatment, data = BFIso)
 
-require(FSA)
-install.packages("FSA")
-library(FSA)
-kruskal.test(X.N ~ Treatment, data = CFIso) #p-value = 0.008749
-dunnTest(X.N ~ Treatment, data = CFIso, method="bh")
+shapiro.test(residuals(model)) # normality PASS
 
-#Running Krustal Wallis and Dunn Test on 13C for all Treatments
+leveneTest(TC ~ Treatment, data = BFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
 
-kruskal.test(X13C ~ Treatment, data = ULIso) #p-value = 0.763 no sig
-dunnTest(X13C ~ Treatment, data = ULIso, method="bh")
+summary(model)
+TukeyHSD(model, method="sidak")
 
-kruskal.test(X13C ~ Treatment, data = DMIso) #p-value = 0.022
-dunnTest(X13C ~ Treatment, data = ULIso, method="bh")
 
-kruskal.test(X13C ~ Treatment, data = BFIso) #p-value = 0.1436 no sig
-dunnTest(X13C ~ Treatment, data = ULIso, method="bh")
+describeBy(CFIso$TC, CFIso$Treatment)
 
-kruskal.test(X13C ~ Treatment, data = CFIso) #p-value = 0.1527 no sig
-dunnTest(X13C ~ Treatment, data = ULIso, method="bh")
+model <- aov(TC ~ Treatment, data = CFIso)
 
-#Running 1-way ANOVA on 15N by all Treatments
+shapiro.test(residuals(model)) # normality PASS
 
-res.aov <- aov(X13N ~ Treatment, data = ULIso) # p=0.00014
-summary(res.aov)
+leveneTest(TC ~ Treatment, data = CFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
 
-TukeyHSD(res.aov)
+summary(model)
+TukeyHSD(model, method="sidak")
 
-res.aov <- aov(X13N ~ Treatment, data = DMIso) #p=0.771 no sig
-summary(res.aov)
+#_________________Model for TN
 
-TukeyHSD(res.aov)
+describeBy(ULIso$TN, ULIso$Treatment)
 
-res.aov <- aov(X13N ~ Treatment, data = BFIso) #p=0.0147
-summary(res.aov)
+model <- aov(TN ~ Treatment, data = ULIso)
 
-TukeyHSD(res.aov)
+shapiro.test(residuals(model)) # normality PASS
 
-res.aov <- aov(X13N ~ Treatment, data = CFIso) #p-0.00123
-summary(res.aov)
+leveneTest(TN ~ Treatment, data = ULIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
 
-TukeyHSD(res.aov)
+summary(model)
+TukeyHSD(model, method="sidak")
+
+describeBy(DMIso$TN, DMIso$Treatment)
+
+model <- aov(TN ~ Treatment, data = DMIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(TN ~ Treatment, data = DMIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model) #No Sig
+TukeyHSD(model, method="sidak")
+
+
+describeBy(BFIso$TN, BFIso$Treatment)
+
+model <- aov(TN ~ Treatment, data = BFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(TN ~ Treatment, data = BFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+
+describeBy(CFIso$TN, CFIso$Treatment)
+
+model <- aov(TN ~ Treatment, data = CFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(TN ~ Treatment, data = CFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+#_________________Model for 13C
+
+describeBy(ULIso$X13C, ULIso$Treatment)
+
+model <- aov(X13C ~ Treatment, data = ULIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13C ~ Treatment, data = ULIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+describeBy(DMIso$X13C, DMIso$Treatment)
+
+model <- aov(X13C ~ Treatment, data = DMIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13C ~ Treatment, data = DMIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model) #No Sig
+TukeyHSD(model, method="sidak")
+
+
+describeBy(BFIso$X13C, BFIso$Treatment)
+
+model <- aov(X13C ~ Treatment, data = BFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13C ~ Treatment, data = BFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+
+describeBy(CFIso$X13C, CFIso$Treatment)
+
+model <- aov(X13C ~ Treatment, data = CFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13C ~ Treatment, data = CFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+#_________________Model for 
+
+describeBy(ULIso$X13N, ULIso$Treatment)
+
+model <- aov(X13N ~ Treatment, data = ULIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13N ~ Treatment, data = ULIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+describeBy(DMIso$X13N, DMIso$Treatment)
+
+model <- aov(X13N ~ Treatment, data = DMIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13N ~ Treatment, data = DMIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model) #No Sig
+TukeyHSD(model, method="sidak")
+
+
+describeBy(BFIso$X13N, BFIso$Treatment)
+
+model <- aov(X13N ~ Treatment, data = BFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13N ~ Treatment, data = BFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
+
+
+describeBy(CFIso$X13N, CFIso$Treatment)
+
+model <- aov(X13N ~ Treatment, data = CFIso)
+
+shapiro.test(residuals(model)) # normality PASS
+
+leveneTest(X13N ~ Treatment, data = CFIso , center = mean) # homoskedasticity
+plot(model) # further diagnostics
+
+summary(model)
+TukeyHSD(model, method="sidak")
 
 
 #Creating Box Plots for Total C and N between Treatments (Possible supplemental figures)
